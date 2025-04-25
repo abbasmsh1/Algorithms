@@ -592,44 +592,36 @@ class GoogLeNet(nn.Module):
 
 class CNN_Factory:
     """
-    Factory class for creating different types of convolutional neural networks.
-    
-    This class provides a convenient way to instantiate different types of CNNs
-    with consistent interfaces.
+    Factory class to create various CNN architectures
     """
-    
     @staticmethod
-    def create_network(
-        network_type: str,
-        num_classes: int = 1000,
-        in_channels: int = 3,
-        **kwargs
-    ) -> nn.Module:
+    def create_network(architecture, **kwargs):
         """
-        Create a convolutional neural network of the specified type.
+        Create a CNN model with the specified architecture
         
-        Args:
-            network_type (str): Type of network to create
-                ('lenet', 'alexnet', 'vgg16', 'resnet18', 'googlenet')
-            num_classes (int): Number of output classes. Default is 1000.
-            in_channels (int): Number of input channels. Default is 3.
-            **kwargs: Additional arguments to pass to the network constructor
+        Parameters:
+        -----------
+        architecture : str
+            The name of the architecture to create
+        **kwargs : 
+            Additional arguments to pass to the model constructor
             
         Returns:
-            nn.Module: The created neural network
-            
-        Raises:
-            ValueError: If network_type is not recognized
+        --------
+        nn.Module
+            The created CNN model
         """
-        if network_type.lower() == 'lenet':
-            return LeNet5(num_classes=num_classes, in_channels=in_channels, **kwargs)
-        elif network_type.lower() == 'alexnet':
-            return AlexNet(num_classes=num_classes, in_channels=in_channels, **kwargs)
-        elif network_type.lower() == 'vgg16':
-            return VGG16(num_classes=num_classes, in_channels=in_channels, **kwargs)
-        elif network_type.lower() == 'resnet18':
-            return ResNet18(num_classes=num_classes, in_channels=in_channels, **kwargs)
-        elif network_type.lower() == 'googlenet':
-            return GoogLeNet(num_classes=num_classes, in_channels=in_channels, **kwargs)
+        architecture = architecture.lower()
+        
+        if architecture == 'lenet5':
+            return LeNet5(**kwargs)
+        elif architecture == 'alexnet':
+            return AlexNet(**kwargs)
+        elif architecture == 'vgg16':
+            return VGG16(**kwargs)
+        elif architecture == 'resnet18':
+            return ResNet18(**kwargs)
+        elif architecture == 'googlenet':
+            return GoogLeNet(**kwargs)
         else:
-            raise ValueError(f"Unknown network type: {network_type}") 
+            raise ValueError(f"Unknown architecture: {architecture}") 
